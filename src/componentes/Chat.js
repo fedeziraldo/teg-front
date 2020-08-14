@@ -1,20 +1,21 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import socketIOClient from "socket.io-client";
-const ENDPOINT = "http://localhost:3001";
+const ENDPOINT = "http://localhost:4001";
 
 function App() {
     const [mensajes, setMensajes] = useState([]);
-
-    useEffect(() => {
-        const socket = socketIOClient(ENDPOINT);
-        socket.on("chat", msj => {
-            setMensajes(...mensajes, msj);
-        });
     
+    const socket = socketIOClient(ENDPOINT);
+    
+    useEffect(() => {
+        socket.on("chat", msj => {
+            console.log(msj)
+            setMensajes([...mensajes, msj]);
+        });
         // CLEAN UP THE EFFECT
         return () => socket.disconnect();
         //
-      }, []);
+      }, [socket]);
 
     const enviarChat = e => {
         console.log(e.target.chat.value)
@@ -27,8 +28,8 @@ function App() {
 
             <ul>
                 {mensajes.map((msj) => (
-                    <li>
-                        msj
+                    <li key={msj}>
+                        {msj}
                     </li>))}
             </ul>
             <form onSubmit={enviarChat}>
