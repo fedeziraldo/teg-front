@@ -2,21 +2,29 @@ import React, { Fragment, useState, useEffect } from 'react';
 import socketIOClient from "socket.io-client";
 const ENDPOINT = "http://localhost:4001";
 
-function App() {
+function Chat({userId}) {
     const [mensajes, setMensajes] = useState([]);
     
-    const socket = socketIOClient(ENDPOINT);
-    
     useEffect(() => {
-        socket.on("chat", msj => {
-            console.log(msj)
-            setMensajes([...mensajes, msj]);
-        });
-        // CLEAN UP THE EFFECT
-        return () => socket.disconnect();
-        //
-      });
-
+        entrar()
+        // // CLEAN UP THE EFFECT
+        // return () => socket.disconnect();
+        // //
+      },[]);
+    const socket = socketIOClient(ENDPOINT);
+    socket.on("chat", msj => {
+        console.log(msj)
+        setMensajes([...mensajes, msj]);
+    });
+    const entrar=()=>{
+        socket.on('connect',()=>{
+            socket.emit('entrarJuego',userId,function(resp){
+                 console.log('Entro al Juego')
+            })
+        })
+    }
+    
+     
     const enviarChat = e => {
         console.log(e.target.chat.value)
         socket.emit("chat", e.target.chat.value)
@@ -41,4 +49,4 @@ function App() {
     );
 }
 
-export default App;
+export default Chat;
