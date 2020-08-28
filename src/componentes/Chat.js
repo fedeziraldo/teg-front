@@ -15,7 +15,7 @@ function App() {
         // CLEAN UP THE EFFECT
         return () => socket.disconnect();
         //
-      }, [socket]);
+      });
 
     const enviarChat = e => {
         console.log(e.target.chat.value)
@@ -34,7 +34,7 @@ function App() {
             </ul>
             <form onSubmit={enviarChat}>
 
-                <input name="chat" />
+                <input autoComplete='off' name="chat" />
                 <button type="submit">Enviar</button>
             </form>
         </Fragment>
