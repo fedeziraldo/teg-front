@@ -1,9 +1,13 @@
 import React,{ useState } from 'react';
-import Chat from "./componentes/Chat"
 import { Register } from './componentes/Register';
 import { Login } from './componentes/Login';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
+import Sala from './componentes/Sala';
+import socketIOClient from "socket.io-client";
+
+const ENDPOINT = "http://localhost:4001";
+const socket = socketIOClient(ENDPOINT);
 
 function App() {
   const [usuario, setusuario] = useState({email:'',contrasena:''})
@@ -38,6 +42,7 @@ function App() {
        let status= response.status
        if(status==='success'){
         setirChat(true)
+        socket.emit("conectar", response.data.token)
        }
         console.log('Success:', response)
       });
@@ -69,7 +74,7 @@ const handlerSubmitRegister=(e)=>{
       ?
       <>
       <h1>Chat Teg</h1>
-      <Chat/>
+      <Sala socket={socket}/>
       </>
       :
       

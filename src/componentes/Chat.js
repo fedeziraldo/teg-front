@@ -1,9 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react';
-import socketIOClient from "socket.io-client";
-const ENDPOINT = "http://localhost:4001";
-const socket = socketIOClient(ENDPOINT);
 
-function Chat({userId}) {
+function Chat({socket}) {
     const [mensajes, setMensajes] = useState([]);
     
     useEffect(() => {
@@ -19,7 +16,7 @@ function Chat({userId}) {
       },[mensajes]);
     const entrar=()=>{
         socket.on('connect',()=>{
-            socket.emit('entrarJuego',userId,function(resp){
+            socket.emit('entrarJuego',function(resp){
                  console.log('Entro al Juego')
             })
         })
