@@ -19,15 +19,14 @@ function Sala({socket}) {
      
     const crearSala = e => {
         socket.emit("crearSala")
-        e.preventDefault()
     }
 
-    const unirseASala = e => {
-        e.preventDefault()
+    const unirseASala = userIdSala => {
+        socket.emit("unirseASala", userIdSala)
     }
 
     const abandonarSala = e => {
-        e.preventDefault()
+        socket.emit("abandonarSala")
     }
 
     return (
@@ -37,10 +36,10 @@ function Sala({socket}) {
                 {salas.map((sala) => (
                     <li key={sala.userId}>
                         {sala.userId} {sala.integrantes.length}
+                        <Button onClick={() => unirseASala(sala.userId)}>Unirse a Sala</Button>
                     </li>))}
             </ol>
             <Button onClick={crearSala}>Crear Sala</Button>
-            <Button onClick={unirseASala}>Unirse a Sala</Button>
             <Button onClick={abandonarSala}>Abandonar Sala</Button>
 
             <Chat socket={socket}/>
