@@ -73,7 +73,6 @@ const handlerSubmitRegister=(e)=>{
      
       ?
       <>
-      <h1>Chat Teg</h1>
       <Sala socket={socket}/>
       </>
       :

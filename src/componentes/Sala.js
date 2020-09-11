@@ -31,7 +31,7 @@ function Sala({socket}) {
 
     return (
         <Fragment>
-
+            <h2>Salas Teg</h2>
             <ol>
                 {salas.map((sala) => (
                     <li key={sala.userId}>

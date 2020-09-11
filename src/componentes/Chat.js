@@ -31,7 +31,7 @@ function Chat({socket}) {
 
     return (
         <Fragment>
-
+            <h2>Chat Teg</h2>
             <ul>
                 {mensajes.map((msj) => (
                     <li key={msj}>
