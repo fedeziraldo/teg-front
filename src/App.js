@@ -1,9 +1,14 @@
 import React,{ useState } from 'react';
-import Chat from "./componentes/Chat"
 import { Register } from './componentes/Register';
 import { Login } from './componentes/Login';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
+import Sala from './componentes/Sala';
+import socketIOClient from "socket.io-client";
+import Mapa from './componentes/Mapa';
+
+const ENDPOINT = "http://localhost:4001";
+const socket = socketIOClient(ENDPOINT);
 
 function App() {
   const [usuario, setusuario] = useState({email:'',contrasena:''})
@@ -12,10 +17,10 @@ function App() {
 
   const handlerChangeInput=({target})=>{
     setusuario({
-        ...usuario,
-        [target.name]:target.value
+      ...usuario,
+      [target.name]:target.value
     })
-}
+  }
   const hadlerRegister=()=>{
     setregistrar(true)
   }
@@ -23,29 +28,30 @@ function App() {
     setregistrar(false)
   }
   const handlerSubmitLogin=(e)=>{
-  
-  
+    
+    
     const url='http://localhost:4001/login/login'
     fetch(url, {
-        method: 'POST', // or 'PUT'
-        body: JSON.stringify(usuario), // data can be `string` or {object}!
-        headers:{
-          'Content-Type': 'application/json'
-        }
-      }).then(res => res.json())
-      .catch(error => console.error('Error:', error))
-      .then(response => {
-       let status= response.status
-       if(status==='success'){
+      method: 'POST', // or 'PUT'
+      body: JSON.stringify(usuario), // data can be `string` or {object}!
+      headers:{
+        'Content-Type': 'application/json'
+      }
+    }).then(res => res.json())
+    .catch(error => console.error('Error:', error))
+    .then(response => {
+      let status= response.status
+      if(status==='success'){
         setirChat(true)
-       }
-        console.log('Success:', response)
-      });
-}
-const handlerSubmitRegister=(e)=>{
-  
-  const url='http://localhost:4001/login/'
-  fetch(url, {
+        socket.emit("conectar", response.data.token)
+      }
+      console.log('Success:', response)
+    });
+  }
+  const handlerSubmitRegister=(e)=>{
+    
+    const url='http://localhost:4001/login/'
+    fetch(url, {
       method: 'POST', // or 'PUT'
       body: JSON.stringify(usuario), // data can be `string` or {object}!
       headers:{
@@ -60,16 +66,15 @@ const handlerSubmitRegister=(e)=>{
       }
       console.log('Success:', response)
     } );
-}
+  }
   return (
     <Container>
       {
-      irChat
-     
-      ?
-      <>
-      <h1>Chat Teg</h1>
-      <Chat/>
+        irChat
+        
+        ?
+        <>
+      <Sala socket={socket}/>
       </>
       :
       
@@ -95,6 +100,7 @@ const handlerSubmitRegister=(e)=>{
       
      
   }
+      <Mapa/>
     </Container>
       
   );
