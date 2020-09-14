@@ -19,7 +19,7 @@ function Chat({ socket }) {
         // // CLEAN UP THE EFFECT
         // return () => socket.disconnect();
         // //
-    }, [mensajes]);
+    }, [mensajes, socket]);
     const entrar = () => {
         socket.on('connect', () => {
             socket.emit('entrarJuego', function (resp) {
@@ -39,7 +39,7 @@ function Chat({ socket }) {
         <Fragment>
 
             {
-                (sala != "sin sala") ?
+                (sala !== "sin sala") ?
                     <Fragment>
                         <div>Estas unido a la sala {sala.userId}</div>
                         <div>

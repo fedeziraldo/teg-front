@@ -5,8 +5,8 @@ import useImage from 'use-image';
 
 function Mapa() {
 
-  const [image] = useImage('mapa.jpg');
-  const [image2] = useImage('Paises/ANGOLA.png');
+  const [image] = useImage('mapa.jpg')
+  const [image2] = useImage('Paises/ANGOLA.png')
   let angola
 
   const rojificar = e => {
@@ -14,9 +14,8 @@ function Mapa() {
     e.target['green'](Math.random() * 255)
     e.target['blue'](Math.random() * 255)
     e.target.cache()
-    e.target.drawHitFromCache();
-    e.target.getLayer().batchDraw();
-    console.log("roj")
+    e.target.drawHitFromCache()
+    e.target.getLayer().batchDraw()
   }
 
   return (

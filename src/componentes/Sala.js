@@ -6,7 +6,6 @@ function Sala({ socket }) {
     const [salas, setSalas] = useState([]);
 
     useEffect(() => {
-        socket.off("salas");
         socket.on("salas", salas => {
             console.log(salas)
             setSalas(salas);
@@ -14,7 +13,7 @@ function Sala({ socket }) {
         // // CLEAN UP THE EFFECT
         // return () => socket.disconnect();
         // //
-    }, [salas]);
+    }, [socket]);
 
     const crearSala = e => {
         socket.emit("crearSala")
