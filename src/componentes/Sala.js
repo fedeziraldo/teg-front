@@ -1,11 +1,10 @@
 import React, { Fragment, useState, useEffect } from 'react';
-import { Button } from 'react-bootstrap';
+import { Button, Col, Row } from 'react-bootstrap';
 import Chat from './Chat';
 
-function Sala({socket}) {
+function Sala({ socket }) {
     const [salas, setSalas] = useState([]);
-    const [sala, setSala] = useState("");
-    
+
     useEffect(() => {
         socket.off("salas");
         socket.on("salas", salas => {
@@ -15,8 +14,8 @@ function Sala({socket}) {
         // // CLEAN UP THE EFFECT
         // return () => socket.disconnect();
         // //
-      },[salas]);    
-     
+    }, [salas]);
+
     const crearSala = e => {
         socket.emit("crearSala")
     }
@@ -31,18 +30,29 @@ function Sala({socket}) {
 
     return (
         <Fragment>
-            <h2>Salas Teg</h2>
-            <ol>
-                {salas.map((sala) => (
-                    <li key={sala.userId}>
-                        {sala.userId} {sala.integrantes.length}
-                        <Button onClick={() => unirseASala(sala.userId)}>Unirse a Sala</Button>
-                    </li>))}
-            </ol>
-            <Button onClick={crearSala}>Crear Sala</Button>
-            <Button onClick={abandonarSala}>Abandonar Sala</Button>
 
-            <Chat socket={socket}/>
+            <Row>
+                <Col>
+                    <h2>Salas Teg</h2>
+                    {salas.length ?
+                        <ol>
+
+                            {salas.map((sala) => (
+                                <li key={sala.userId}>
+                                    {sala.userId} {sala.integrantes.length}
+                                    <Button onClick={() => unirseASala(sala.userId)}>Unirse a Sala</Button>
+                                </li>))}
+                        </ol>
+                        :
+                        <div>No hay salas</div>
+                    }
+                    <Button onClick={crearSala}>Crear Sala</Button>
+                    <Button onClick={abandonarSala}>Abandonar Sala</Button>
+                </Col>
+                <Col>
+                    <Chat socket={socket} />
+                </Col>
+            </Row>
         </Fragment>
     );
 }
