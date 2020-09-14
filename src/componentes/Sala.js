@@ -33,17 +33,18 @@ function Sala({ socket }) {
             <Row>
                 <Col>
                     <h2>Salas Teg</h2>
-                    {salas.length ?
-                        <ol>
+                    {
+                        salas.length ?
+                            <ol>
 
-                            {salas.map((sala) => (
-                                <li key={sala.userId}>
-                                    {sala.userId} {sala.integrantes.length}
-                                    <Button onClick={() => unirseASala(sala.userId)}>Unirse a Sala</Button>
-                                </li>))}
-                        </ol>
-                        :
-                        <div>No hay salas</div>
+                                {salas.map((sala) => (
+                                    <li key={sala.userId}>
+                                        {sala.userId} {sala.integrantes.length}
+                                        <Button onClick={() => unirseASala(sala.userId)}>Unirse a Sala</Button>
+                                    </li>))}
+                            </ol>
+                            :
+                            <div>No hay salas</div>
                     }
                     <Button onClick={crearSala}>Crear Sala</Button>
                     <Button onClick={abandonarSala}>Abandonar Sala</Button>

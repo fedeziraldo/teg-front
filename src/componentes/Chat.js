@@ -39,7 +39,7 @@ function Chat({ socket }) {
         <Fragment>
 
             {
-                (sala !== "sin sala") ?
+                sala !== "sin sala" ?
                     <Fragment>
                         <div>Estas unido a la sala {sala.userId}</div>
                         <div>
