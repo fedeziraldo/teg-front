@@ -2,7 +2,7 @@ import React, { Fragment, useState, useEffect } from 'react';
 
 function Chat({ socket }) {
     const [mensajes, setMensajes] = useState([]);
-    const [sala, setSala] = useState({ integrantes: [] });
+    const [sala, setSala] = useState({ integrantes: [],usuario:{} });
 
     useEffect(() => {
         //entrar()
@@ -41,12 +41,12 @@ function Chat({ socket }) {
             {
                 sala !== "sin sala" ?
                     <Fragment>
-                        <h2>Estas unido a la sala <i>{sala.userId}</i></h2>
+                        <h2>Estas unido a la sala <i>{sala.usuario.email}</i></h2>
                         <div>
                             Integrantes:
                             <ul>
                                 {sala.integrantes.map(integrante =>
-                                    <li key={integrante}>{integrante}</li>
+                                    <li key={integrante}>{integrante.alias}</li>
                                 )}
                             </ul>
                         </div>
