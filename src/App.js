@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Register } from './componentes/Register';
 import { Login } from './componentes/Login';
 import Container from 'react-bootstrap/Container';
@@ -14,6 +14,12 @@ function App() {
     const [usuario, setusuario] = useState({ email: '', contrasena: '' })
     const [registrar, setregistrar] = useState(false)
     const [irChat, setirChat] = useState(false)
+
+    useEffect(() => {
+        socket.on("usuario", usuario => {
+            console.log(usuario)
+        });
+    }, []);
 
     const handlerChangeInput = ({ target }) => {
         setusuario({

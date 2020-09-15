@@ -41,12 +41,12 @@ function Chat({ socket }) {
             {
                 sala !== "sin sala" ?
                     <Fragment>
-                        <div>Estas unido a la sala {sala.userId}</div>
+                        <h2>Estas unido a la sala <i>{sala.userId}</i></h2>
                         <div>
                             Integrantes:
-                                <ul>
+                            <ul>
                                 {sala.integrantes.map(integrante =>
-                                    <li>{integrante}</li>
+                                    <li key={integrante}>{integrante}</li>
                                 )}
                             </ul>
                         </div>
