@@ -12,17 +12,23 @@ function Sala({ socket }) {
             console.log(salas)
             setSalas(salas);
         });
+   
+        // // CLEAN UP THE EFFECT
+        // return () => socket.disconnect();
+        // //
+    }, [socket]);
+    useEffect(() => {
+        
         socket.on("error", msg => {
-            if(msg){
+            console.log(msg)
+          
                 setmsgError(msg)
-            }
-            
         });
        
         // // CLEAN UP THE EFFECT
         // return () => socket.disconnect();
         // //
-    }, [socket]);
+    },[msgError] );
 
     const crearSala = e => {
         socket.emit("crearSala")
@@ -38,11 +44,9 @@ function Sala({ socket }) {
 
     return (
         <Fragment>
-            {
-            msgError?
+         
             <MensajeError mensaje={msgError}/>
-            :null
-            }
+          
             <Row>
                 <Col>
                     <h2>Salas Teg</h2>
