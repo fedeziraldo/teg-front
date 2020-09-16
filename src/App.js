@@ -16,8 +16,14 @@ function App() {
     const [irChat, setirChat] = useState(false)
 
     useEffect(() => {
+        socket.emit("conectar", localStorage.getItem("token"))
         socket.on("usuario", usuario => {
             console.log(usuario)
+            setirChat(true)
+        });
+        socket.on("errorConexion", () => {
+            console.log("token erroneo o inexistente")
+            setirChat(false)
         });
     }, []);
 
@@ -48,6 +54,7 @@ function App() {
             .then(response => {
                 let status = response.status
                 if (status === 'success') {
+                    localStorage.setItem("token", response.data.token)
                     setirChat(true)
                     socket.emit("conectar", response.data.token)
                 }
@@ -73,6 +80,13 @@ function App() {
                 console.log('Success:', response)
             });
     }
+
+    const salir = () => {
+        socket.emit("desconectar")
+        localStorage.removeItem("token");
+        setirChat(false)
+    }
+
     return (
         <Container>
             {
@@ -80,6 +94,7 @@ function App() {
 
                     ?
                     <>
+                        <Button onClick={salir}>Salir</Button> 
                         <Sala socket={socket} />
                     </>
                     :

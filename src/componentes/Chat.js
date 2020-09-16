@@ -57,8 +57,8 @@ function Chat({ socket }) {
 
             <h2>Chat Teg</h2>
             <ul>
-                {mensajes.map((msj) => (
-                    <li key={msj}>
+                {mensajes.map((msj, i) => (
+                    <li key={i}>
                         {msj}
                     </li>))}
             </ul>
