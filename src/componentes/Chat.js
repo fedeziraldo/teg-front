@@ -1,4 +1,5 @@
 import React, { Fragment, useState, useEffect } from 'react';
+import { Button } from 'react-bootstrap';
 
 function Chat({ socket }) {
     const [mensajes, setMensajes] = useState([]);
@@ -34,6 +35,10 @@ function Chat({ socket }) {
         socket.emit("chat", e.target.chat.value)
         e.preventDefault()
     }
+    
+    const abandonarSala = e => {
+        socket.emit("abandonarSala")
+    }
 
     return (
         <Fragment>
@@ -49,6 +54,7 @@ function Chat({ socket }) {
                                     <li key={integrante}>{integrante.alias}</li>
                                 )}
                             </ul>
+                            <Button onClick={abandonarSala}>Abandonar Sala</Button>
                         </div>
                     </Fragment>
                     :

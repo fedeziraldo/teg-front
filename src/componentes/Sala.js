@@ -32,10 +32,6 @@ function Sala({ socket }) {
         socket.emit("unirseASala", userIdSala)
     }
 
-    const abandonarSala = e => {
-        socket.emit("abandonarSala")
-    }
-
     return (
         <Fragment>
             {
@@ -70,7 +66,6 @@ function Sala({ socket }) {
                             <div><h5>No hay salas</h5></div>
                     }
                     <Button onClick={crearSala}>Crear Sala</Button>
-                    <Button onClick={abandonarSala}>Abandonar Sala</Button>
                 </Col>
                 <Col>
                     <Chat socket={socket} />
