@@ -13,18 +13,17 @@ const socket = socketIOClient(ENDPOINT);
 function App() {
     const [usuario, setusuario] = useState({ email: '', contrasena: '' })
     const [registrar, setregistrar] = useState(false)
-    const [irChat, setirChat] = useState(false)
+    const [irChat, setirChat] = useState(true)
 
     useEffect(() => {
-        socket.emit("conectar", localStorage.getItem("token"))
         socket.on("usuario", usuario => {
             console.log(usuario)
-            setirChat(true)
         });
         socket.on("errorConexion", () => {
             console.log("token erroneo o inexistente")
             setirChat(false)
         });
+        socket.emit("conectar", localStorage.getItem("token"))
     }, []);
 
     const handlerChangeInput = ({ target }) => {
