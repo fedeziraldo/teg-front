@@ -12,12 +12,14 @@ const socket = socketIOClient(ENDPOINT);
 
 function App() {
     const [usuario, setusuario] = useState({ email: '', contrasena: '' })
+    const [Usuario, setUsuario] = useState({})
     const [registrar, setregistrar] = useState(false)
     const [irChat, setirChat] = useState(true)
 
     useEffect(() => {
         socket.on("usuario", usuario => {
             console.log(usuario)
+            setUsuario(usuario)
         });
         socket.on("errorConexion", () => {
             console.log("token erroneo o inexistente")
@@ -94,7 +96,7 @@ function App() {
                     ?
                     <>
                         <Button onClick={salir}>Salir</Button> 
-                        <Sala socket={socket} />
+                        <Sala socket={socket} usuario={Usuario} />
                     </>
                     :
 

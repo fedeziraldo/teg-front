@@ -1,9 +1,9 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { Button } from 'react-bootstrap';
 
-function Chat({ socket }) {
+function Chat({ socket, usuario }) {
     const [mensajes, setMensajes] = useState([]);
-    const [sala, setSala] = useState({ integrantes: [],usuario:{} });
+    const [sala, setSala] = useState({ integrantes: [], usuario: {} });
 
     useEffect(() => {
         //entrar()
@@ -35,9 +35,13 @@ function Chat({ socket }) {
         socket.emit("chat", e.target.chat.value)
         e.preventDefault()
     }
-    
+
     const abandonarSala = e => {
         socket.emit("abandonarSala")
+    }
+
+    const iniciarJuego = e => {
+        socket.emit("iniciarJuego")
     }
 
     return (
@@ -46,7 +50,12 @@ function Chat({ socket }) {
             {
                 sala !== "sin sala" ?
                     <Fragment>
-                        <h2>Estas unido a la sala <i>{sala.usuario.email}</i></h2>
+                        {
+                            usuario._id === sala.userId ?
+                                <h2>Creaste la sala <i>{sala.usuario.email}</i></h2>
+                                :
+                                <h2>Estas unido a la sala <i>{sala.usuario.email}</i></h2>
+                        }
                         <div>
                             Integrantes:
                             <ul>
@@ -55,6 +64,13 @@ function Chat({ socket }) {
                                 )}
                             </ul>
                             <Button onClick={abandonarSala}>Abandonar Sala</Button>
+                            {
+                                usuario._id === sala.userId ?
+                                    <Button onClick={iniciarJuego}>Iniciar juego</Button>
+                                    :
+                                    null
+                            }
+
                         </div>
                     </Fragment>
                     :

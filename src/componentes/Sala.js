@@ -3,7 +3,7 @@ import { Button, Col, Row,Table } from 'react-bootstrap';
 import Chat from './Chat';
 import MensajeError from './MensajeError';
 
-function Sala({ socket }) {
+function Sala({ socket, usuario }) {
     const [salas, setSalas] = useState([]);
     const [msgError, setmsgError] = useState("");
 
@@ -41,6 +41,11 @@ function Sala({ socket }) {
             }
             <Row>
                 <Col>
+                    <div>
+                        <h2>Bienvenido {usuario.nombreCompleto}</h2>
+                        {usuario._id}<br/>
+                        {usuario.email}
+                    </div>
                     <h2>Salas Teg</h2>
                     {
                          salas.length ?
@@ -68,7 +73,7 @@ function Sala({ socket }) {
                     <Button onClick={crearSala}>Crear Sala</Button>
                 </Col>
                 <Col>
-                    <Chat socket={socket} />
+                    <Chat socket={socket} usuario={usuario} />
                 </Col>
             </Row>
         </Fragment>
